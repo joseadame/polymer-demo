@@ -1,0 +1,188 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/google-map/google-map.html">
+<link rel="import" href="../bower_components/google-map/google-map-marker.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<dom-module id="polymer-demo">
+    <style>
+    </style>
+    <template>
+        <paper-drawer-panel>
+            <paper-header-panel drawer>
+                <paper-toolbar></paper-toolbar>
+                <div>
+                    <paper-menu id="menu" selected="{{selectOption}}">
+                        <paper-item>Mapa</paper-item>
+                        <paper-item>Listado de centros</paper-item>
+                    </paper-menu>
+                </div>
+            </paper-header-panel>
+            <paper-header-panel main>
+                <paper-toolbar class="tall">
+                    <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                    <span class="title">Listado de centros Grid</span>
+                    <paper-tabs id="tabs" class="bottom self-end" selected="{{selected}}">
+                        <paper-tab>Mapa</paper-tab>
+                        <paper-tab>Listado</paper-tab>
+                    </paper-tabs>
+                </paper-toolbar>
+                <div>
+                    <iron-pages id="pages" selected={{selected}}>
+                        <div>
+                            <google-map id="map" latitude="43.8261754" longitude="17.1714736" zoom="13" fit-to-markers>
+                                <template is="dom-repeat" items="{{centrosGrid}}">
+                                    <google-map-marker latitude="{{item.lat}}" longitude="{{item.long}}" title="{{item.name}}"></google-map-marker>
+                                </template>
+                            </google-map>
+                        </div>
+                        <div class="content">
+                                <template is="dom-repeat" items="{{centrosGrid}}">
+                                    <paper-item>
+                                      <paper-item-body two-line>
+                                        <div>{{item.name}}</div>
+                                      </paper-item-body>
+                                    </paper-item>
+                                </template>
+                        </div>
+                    </iron-pages>
+               </div>
+                    
+                </div>
+            </paper-header-panel>
+        </paper-drawer-panel>
+    </template>
+</dom-module>
+<script>
+    //llamamos al objeto que  inicializa el componente.
+    Polymer({
+        is:"polymer-demo",
+        ready: function(){
+            this.$.tabs.selected = 0;
+            this.$.map.style.height = window.innerHeight -168;
+        },
+        properties: {
+            centrosGrid:{
+                type: Array,
+                value: function(){
+                    var array = new Array();  
+                    array.push({
+                        "name":"100 Percent IT Ltd",
+                        "lat":"51.3885823",
+                        "long":"-1.361035"
+                    });
+                    array.push({
+                        "name":"UNIZAR / BIFI",
+                        "lat":"41.6917474",
+                        "long":"-1.2072398"
+                    });
+                    array.push({
+                        "name":"Cyfronet (NGI PL)",
+                        "lat":"50.0469018",
+                        "long":"19.864791"
+                    });
+                    array.push({
+                        "name":"CESGA",
+                        "lat":"42.8802351",
+                        "long":"-8.5622792"
+                    });
+                    array.push({
+                        "name":"CESNET-MetaCloud",
+                        "lat":"50.0598058",
+                        "long":"14.3255418"
+                    });
+                    array.push({
+                        "name":"FZ Jülich",
+                        "lat":"50.928645",
+                        "long":"6.2896754"
+                    });
+                    array.push({
+                        "name":"GWDG",
+                        "lat":"51.5370234",
+                        "long":"9.8568133"
+                    });
+                    array.push({
+                        "name":"CSIC/IFCA",
+                        "lat":"43.4614014",
+                        "long":"-3.8461564"
+                    });
+                    array.push({
+                        "name":"GRNET",
+                        "lat":"37.9908997",
+                        "long":"23.7033199"
+                    });
+                    array.push({
+                        "name":"II SAS",
+                        "lat":"48.1359244",
+                        "long":"16.9758347"
+                    });
+                    array.push({
+                        "name":"INFN - Catania",
+                        "lat":"37.4908267",
+                        "long":"15.0074731"
+                    });
+                    array.push({
+                        "name":"INFN - Bari",
+                        "lat":"41.0922226",
+                        "long":"16.7352308"
+                    });
+                    array.push({
+                        "name":"INFN-PADOVA",
+                        "lat":"45.4066029",
+                        "long":"11.8212059"
+                    });
+                    array.push({
+                        "name":"MTA SZTAKI",
+                        "lat":"47.4813602",
+                        "long":"18.9902207"
+                    });
+                    array.push({
+                        "name":"TUBITAK ULAKBIM",
+                        "lat":"39.9035557",
+                        "long":"32.6226815"
+                    });
+                    array.push({
+                        "name":"UKIM",
+                        "lat":"41.9991965",
+                        "long":"21.3548506"
+                    });
+                    array.push({
+                        "name":"CETA-CIEMAT",
+                        "lat":"39.4950124",
+                        "long":"-6.2983804"
+                    });
+                    array.push({
+                        "name":"IPHC",
+                        "lat":"48.5750629",
+                        "long":"7.6923526"
+                    });
+                    array.push({
+                        "name":"NCG-INGRID-PT / LIP",
+                        "lat":"38.7437396",
+                        "long":"7.6923526"
+                    });
+                    array.push({
+                        "name":"Polythecnic University of Valencia, I3M",
+                        "lat":"39.4690455",
+                        "long":"-9.2302435"
+                    });
+                    return array;
+                }
+            },
+            selectOption: {
+                type: Number,
+                value: 0,
+                observer: "activateOption"
+            }
+        },
+        activateOption: function(index){
+            this.$.tabs.selected = index;
+        }
+    });
+</script>
