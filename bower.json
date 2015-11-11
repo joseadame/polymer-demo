@@ -28,6 +28,8 @@
     "google-map": "GoogleWebComponents/google-map#~1.1.4",
     "paper-menu": "PolymerElements/paper-menu#~1.1.1",
     "paper-item": "PolymerElements/paper-item#~1.0.3",
-    "iron-ajax": "PolymerElements/iron-ajax#~1.0.6"
+    "iron-ajax": "PolymerElements/iron-ajax#~1.0.6",
+    "paper-input": "PolymerElements/paper-input#~1.0.18",
+    "paper-card": "PolymerElements/paper-card#~1.0.7"
   }
 }
