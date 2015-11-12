@@ -12,6 +12,7 @@
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <dom-module id="polymer-demo">
     <style>
     </style>
@@ -20,7 +21,7 @@
             <paper-header-panel drawer>
                 <paper-toolbar></paper-toolbar>
                 <div>
-                    <paper-input label="Buscar" type="search" placeholder="Nombre del centro"  value="{{filterVal::input}}">
+                    <paper-input label="Buscar" type="search" placeholder="Nombre del centro"  value="{{name::input}}">
                     </paper-input>
                 </div>
             </paper-header-panel>
@@ -32,18 +33,24 @@
                         <paper-tab>Mapa</paper-tab>
                         <paper-tab>Listado</paper-tab>
                     </paper-tabs>
+                    <select value="{{country::change}}">
+                        <option value="">Todos los países</option>
+                        <template is="dom-repeat" items="{{countries}}">
+                            <option value="{{item.name}}">{{item.name}}</option>
+                        </template>
+                    </select>
                 </paper-toolbar>
                 <div>
                     <iron-pages selected="{{selected}}">
                         <div>
                             <google-map id="map" latitude="43.8261754" longitude="17.1714736" zoom="13" fit-to-markers>
-                                <template is="dom-repeat" items="{{centrosGrid}}" filter="{{_filter(filterVal)}}" >
+                                <template is="dom-repeat" items="{{centrosGrid}}" filter="{{_filter(name, country)}}" >
                                     <google-map-marker latitude="{{item.lat}}" longitude="{{item.long}}" title="{{item.name}}"></google-map-marker>
                                 </template>
                             </google-map>
                         </div>
                         <div>
-                            <template is="dom-repeat" items="{{centrosGrid}}" filter="{{_filter(filterVal)}}">
+                            <template is="dom-repeat" items="{{centrosGrid}}" filter="{{_filter(name, country)}}">
                                 <paper-card heading="{{item.name}}">
                                     <div class="card-content">{{item.country}}</div>
                                 </paper-card>
@@ -64,6 +71,58 @@
             this.$.tabs.selected = 0;
         },
         properties: {
+            name: {
+                type: String,
+                value: ''
+            },
+            country: {
+                type: String,
+                value : ''
+            },
+            countries: {
+                type: Array,
+                value: function(){
+                    var array = new Array();
+                    array.push( {
+                        "name": "España"
+                    });
+                    array.push( {
+                        "name": "Francia"
+                    });
+                    array.push( {
+                        "name": "Reino Unido"
+                    });
+                    array.push( {
+                        "name": "Polonia"
+                    });
+                    array.push( {
+                        "name": "República Checa"
+                    });
+                    array.push( {
+                        "name": "Italia"
+                    });
+                    array.push( {
+                        "name": "Alemania"
+                    });
+                    array.push( {
+                        "name": "Grecia"
+                    });
+                    array.push( {
+                        "name": "Austria"
+                    });
+                    array.push( {
+                        "name": "Hungría"
+                    });
+                    array.push( {
+                        "name": "Macedonia"
+                    });
+                    array.push( {
+                        "name": "Portugal"
+                    });
+            
+                    return array;
+                }
+            },
             centrosGrid:{
                 type: Array,
                 value: function(){
@@ -94,7 +153,7 @@
                     });
                     array.push({
                         "name":"CESNET-MetaCloud",
-                        "country": "República Checka",
+                        "country": "República Checa",
                         "lat":"50.0598058",
                         "long":"14.3255418"
                     });
@@ -197,11 +256,19 @@
                 }
             }
         },
-        _filter: function(val) {  
+        _filter: function(name, country) {  
+            console.log('entramos');
                return function(item) {
-                    if (!val) return true;
-                        if (!item) return false;
-                            return (item.name.toLowerCase() && ~item.name.toLowerCase().indexOf(val.toLowerCase()));
+                    if (!name && !country){ 
+                        return true;
+                    }
+                    if (!item){ 
+                        return false;
+                    }
+                    console.log(name);
+                    console.log(country);
+                    return (item.name.toLowerCase() && ~item.name.toLowerCase().indexOf(name.toLowerCase()) &&
+                           (item.country && ~item.country.toLowerCase().indexOf(country.toLowerCase())));
                 };
         }
     });
